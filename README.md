@@ -10,7 +10,7 @@
 2. **Clone the Repository**
     Clone the GitHub repository for the File Stream bot using the following command:
 
-    `git clone https://github.com/mohamadSaleh82/File-Stream-bot`
+        `git clone https://github.com/mohamadSaleh82/File-Stream-bot`
 3. **Set Environment Variables or Edit Config/init.py**
     Open the Config/__init__.py file and configure the following environment variables:
     ```
@@ -24,7 +24,7 @@
 
     Install the required Python packages using pip:
 
-    `pip install -r requirements.txt`
+        `pip install -r requirements.txt`
 5. **Run the Web Application**
 
     run web : 
