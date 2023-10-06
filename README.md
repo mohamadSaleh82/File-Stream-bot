@@ -19,14 +19,28 @@
         `./start`
 
 
-Environment :
-|env|description|Example|
-|-|-|-|
-|api_id|api_id Telegram to develop a robot to receive my.telegram.org|12345|
-|api_hash|api_hash Telegram to develop a robot to receive my.telegram.org|21ab7cb0a453b5e60016dc7bbeb701cb|
-|channel_files_chat_id|Telegram channel chat ID for storing and managing files|-10012345466|
-|channel_username|Telegram channel username for support|Userlandapp|
-|token|Telegram robot token for launch|0000000:AAFFMMgYoL9Vjb5KUU0bXxVReUI81xuU|
+
+**Environment:**
+
+| Env             | Description                                                      | Example                              |
+|-----------------|------------------------------------------------------------------|--------------------------------------|
+| api_id          | Telegram API ID for developing a bot (get from my.telegram.org) | 12345                                |
+| api_hash        | Telegram API hash for developing a bot                           | 21ab7cb0a453b5e60016dc7bbeb701cb    |
+| channel_files_chat_id | Telegram channel chat ID for storing and managing files  | -10012345466                         |
+| channel_username | Telegram channel username for support                            | Userlandapp                          |
+| token           | Telegram bot token for launching                                  | 0000000:AAFFMMgYoL9Vjb5KUU0bXxVReUI81xuU |
+
+**Management Guide:**
+
+📚 If a file is deleted from the storage channel, the link will expire.
+
+📩 If a file is replayed in the storage channel and a message is sent, that message will be sent to the sender of the file.
+
+🔄 If a file is edited in the storage channel and replaced by another file, the link will download the new file.
+
+🚫 If a user is blocked from the support channel, they can no longer use the bot.
+
+Feel free to ask if you need any further information or assistance! 🤖🔗📦
 
 
 
