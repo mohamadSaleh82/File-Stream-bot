@@ -1,5 +1,5 @@
 
-* Cli :
+## Getting Started 🚀
 
     > install python3.8+
     
@@ -42,7 +42,7 @@
 
 Feel free to ask if you need any further information or assistance! 🤖🔗📦
 
-
+Don't forget to star this repository 🌟 if you find it useful!
 
 
 Management guide:
