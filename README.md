@@ -9,6 +9,7 @@
    python --version
 2. **Clone the Repository**
     Clone the GitHub repository for the File Stream bot using the following command:
+
     `git clone https://github.com/mohamadSaleh82/File-Stream-bot`
 3. **Set Environment Variables or Edit Config/init.py**
     Open the Config/__init__.py file and configure the following environment variables:
@@ -20,16 +21,22 @@
     token = "0000000:AAFFMMgYoL9Vjb5KUU0bXxVReUI81xuU"  # Your Telegram bot token
     ```
 4. **Install Python Dependencies**
+
     Install the required Python packages using pip:
+
     `pip install -r requirements.txt`
 5. **Run the Web Application**
+
     run web : 
+
         `gunicorn main:main --workers 4 --threads 4 --bind 0.0.0.0:$PORT --timeout 86400 --worker-class aiohttp.GunicornWebWorker`
         
     run bot :
+
         `python -m bot`
         
     run web and bot :
+
         `./start`
 
 
