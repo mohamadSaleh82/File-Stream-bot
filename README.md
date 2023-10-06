@@ -48,10 +48,10 @@
 | api_id          | Telegram API ID for developing a bot (get from my.telegram.org) | 12345                                |
 | api_hash        | Telegram API hash for developing a bot                           | 21ab7cb0a453b5e60016dc7bbeb701cb    |
 | channel_files_chat_id | Telegram channel chat ID for storing and managing files  | -10012345466                         |
-| channel_username | Telegram channel username for support                            | Userlandapp                          |
+| channel_username | Telegram channel username for support                            | file2link                         |
 | token           | Telegram bot token for launching                                  | 0000000:AAFFMMgYoL9Vjb5KUU0bXxVReUI81xuU |
 
-**Management Guide:**
+## Management Guide:
 
 📚 If a file is deleted from the storage channel, the link will expire.
 
