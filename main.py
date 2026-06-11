@@ -4,10 +4,6 @@ import logging
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 import os
-import nest_asyncio
-
-# Apply nest_asyncio to allow running async code in Streamlit
-nest_asyncio.apply()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,51 +29,69 @@ def init_telegram_client():
     
     # Start the client with bot token
     try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(client.start(bot_token=BOT_TOKEN))
+        # Use asyncio.run() for clean event loop management
+        async def start_client():
+            await client.start(bot_token=BOT_TOKEN)
+            return client
+        
+        # Create a new event loop for initialization
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        result = loop.run_until_complete(start_client())
+        loop.close()
         logger.info("Telegram client started successfully")
+        return result
     except Exception as e:
         st.error(f"Failed to start Telegram client: {e}")
         return None
-    
-    return client
 
-def get_messages(client, limit=20):
-    """Get recent messages from channel"""
+def get_messages_sync(client, limit=20):
+    """Get recent messages from channel (synchronous wrapper)"""
     if not client:
         return []
     
     try:
-        loop = asyncio.get_event_loop()
-        messages = loop.run_until_complete(client.get_messages(CHANNEL_ID, limit=limit))
+        async def fetch_messages():
+            return await client.get_messages(CHANNEL_ID, limit=limit)
+        
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        messages = loop.run_until_complete(fetch_messages())
+        loop.close()
         return messages
     except Exception as e:
         logger.error(f"Error getting messages: {e}")
         return []
 
-def download_file(client, message_id):
-    """Download file from Telegram"""
+def download_file_sync(client, message_id):
+    """Download file from Telegram (synchronous wrapper)"""
     if not client:
         return None, None
     
     try:
-        loop = asyncio.get_event_loop()
-        message = loop.run_until_complete(client.get_messages(CHANNEL_ID, ids=message_id))
-        if not message or not message.file:
-            return None, None
+        async def fetch_and_download():
+            message = await client.get_messages(CHANNEL_ID, ids=message_id)
+            if not message or not message.file:
+                return None, None
+            
+            file_name = message.file.name or f"file{message.file.ext or ''}"
+            
+            # Download file to memory
+            file_data = await message.download_media()
+            
+            with open(file_data, 'rb') as f:
+                file_bytes = f.read()
+            
+            # Clean up downloaded file
+            os.remove(file_data)
+            
+            return file_bytes, file_name
         
-        file_name = message.file.name or f"file{message.file.ext or ''}"
-        
-        # Download file to memory
-        file_data = loop.run_until_complete(message.download_media())
-        
-        with open(file_data, 'rb') as f:
-            file_bytes = f.read()
-        
-        # Clean up downloaded file
-        os.remove(file_data)
-        
-        return file_bytes, file_name
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        result = loop.run_until_complete(fetch_and_download())
+        loop.close()
+        return result
     except Exception as e:
         logger.error(f"Error downloading file: {e}")
         return None, None
@@ -92,7 +106,7 @@ if client:
     st.success("✅ Bot is connected!")
     
     # Get messages
-    messages = get_messages(client)
+    messages = get_messages_sync(client)
     
     if messages:
         st.subheader("Available Files")
@@ -108,7 +122,7 @@ if client:
                 with col2:
                     if st.button("Download", key=f"dl_{msg.id}"):
                         with st.spinner("Downloading..."):
-                            file_bytes, fname = download_file(client, msg.id)
+                            file_bytes, fname = download_file_sync(client, msg.id)
                             if file_bytes:
                                 st.download_button(
                                     label="Save File",

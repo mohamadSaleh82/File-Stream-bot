@@ -1,9 +1,6 @@
 cryptg
 hachoir
-#pillow
+pillow
 werkzeug
-aiohttp
 Telethon
 requests
-gunicorn
-nest_asyncio
